@@ -1,10 +1,8 @@
 import mysql.connector
+from dotenv import load_dotenv
+import os
 
-# Datos de conexión a tu instancia RDS
-host = 'prueba1.cluwgo82u672.us-east-2.rds.amazonaws.com'
-user = 'admin'  # o el que hayas definido
-password = 'SamuYLau2227'
-port=3306
+load_dotenv()
 
 # Lee el script SQL
 with open(r'server\proyecto_ddl.sql', 'r', encoding='utf-8') as file:
@@ -16,10 +14,10 @@ with open(r'server\proyecto_dml.sql', 'r', encoding='utf-8') as file:
 try:
     # Conecta a MySQL sin especificar base de datos
     conn = mysql.connector.connect(
-        host=host,
-        user=user,
-        password=password,
-        port=port
+        host=os.getenv("DB_HOST"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        database=os.getenv("DB_NAME")
     )
     cursor = conn.cursor(buffered=True)
     # Dividir en sentencias individuales (por ; )
