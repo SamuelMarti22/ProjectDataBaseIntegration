@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upload Form</title>
+  <link rel="stylesheet" href="../css/upload-form.css" />
+</head>
+<body>
+  <div class="upload-container">
+    <h2>Add new subscribers</h2>
+    <div class="upload-box">
+      <input type="file" id="fileInput" hidden />
+      <label for="fileInput" class="drop-area">
+        Drag & Drop or <span class="choose">Choose file</span> to upload<br />
+        <small>CSV or TXT</small>
+      </label>
+      <div class="progress-box" id="progressBox" style="display:none;">
+        <div class="file-info">
+          <span class="file-name">Customers_04_2022.csv</span>
+          <span class="file-status" id="fileStatus">Uploading...</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress" id="progress" style="width: 44%;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="url-upload">
+      <label for="urlInput">Import from URL</label>
+      <input type="text" id="urlInput" placeholder="Add file URL" />
+      <button class="upload-btn">Upload</button>
+    </div>
+
+    <div class="footer">
+      <a href="#">Help Center</a>
+      <div class="actions">
+        <button class="cancel-btn">Cancel</button>
+        <button class="import-btn">Import</button>
+      </div>
+    </div>
+  </div>
+  <script src="../js/upload-form.js"></script>
+</body>
+</html>
