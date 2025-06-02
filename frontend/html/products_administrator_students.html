@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popular Products</title>
+  <link rel="stylesheet" href="../css/products.css">
+</head>
+<body id="products_administrator_students">
+  <div class="topbar">WrapPixel - Productos Populares</div>
+  <div class="main-layout">
+    <aside class="sidebar">
+      <h2>MaterialM</h2>
+      <nav>
+        <ul>
+          <li><a href="courses_admin.html">Cursos</a></li>
+          <li><a href="users_admin .html">Usuarios</a></li>
+          <li><a href="#" class="active">Solicitud Estudiante</a></li>
+          <li><a href="products_administrator_teachers.html">Solicitud Docentes</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="products-container">
+        <h3>Solicitudes</h3>
+        <table id="tabla-solicitudes">
+          <thead>
+            <tr>
+              <th>Curso</th>
+              <th>Profesor</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-body-students"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../scripts/main.js"></script>
+</body>
+</html>

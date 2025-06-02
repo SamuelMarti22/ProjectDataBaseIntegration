@@ -24,7 +24,7 @@ def leer_usuarios():
 
 @app.get("/cursos")
 def leer_cursos():
-    resultado = db_utils.get_cursos()
+    resultado = db_utils.get_Cursos()
     if "error" in resultado:
         raise HTTPException(status_code=500, detail=resultado["error"])
     return resultado
@@ -73,6 +73,29 @@ class InsertRequest(BaseModel):
     contrasena:str
     rol: str
 
+class InsertCourseRequest(BaseModel):
+    id_curso: str
+    nombre: str
+    categoria: str
+    ruta: str
+    fecha_inicio: str
+    fecha_fin: str
+    ano: str
+    semestre: str
+    precio: str
+    id_profesor: str
+
+class InsertSolicitudRequest(BaseModel):
+    id_curso: str
+    id_profesor: int
+
+class AcceptRequest(BaseModel):
+    id_curso: str
+    id_nodo: int
+
+class query(BaseModel):
+    query: str
+
 @app.post("/login")
 def login(request: LoginRequest):
     # Simulación de verificación de usuario (aquí iría tu lógica real)
@@ -90,10 +113,83 @@ def login(request: LoginRequest):
 @app.post("/insert_user")
 def login(request: InsertRequest):
     # Simulación de verificación de usuario (aquí iría tu lógica real)
-    resultado = db_utils.verificar_usuario(request.username,request.password)
+    resultado = db_utils.insert_user(request.documento_Identidad,request.nombre_completo,request.email,request.genero,request.referencia_bancaria,request.contrasena,request.rol)
     print(resultado)
-    print(request.username, request.password)
-    print("Usuario:", resultado["usuario"])
-    if resultado["usuario"] == request.username:
-        print("Usuario verificado")
+    return resultado
+
+@app.post("/insert_course")
+def login(request: InsertCourseRequest):
+    # Simulación de verificación de usuario (aquí iría tu lógica real)
+    resultado = db_utils.insert_course(request.id_curso,request.nombre,request.categoria,request.ruta,request.fecha_inicio,request.fecha_fin,request.ano,request.semestre,request.precio,request.id_profesor)
+    print(resultado)
+    return resultado
+
+@app.post("/insert_solicitud")
+def insert_solicitud(request: InsertSolicitudRequest):
+    resultado = db_utils.insert_solicitud(request.id_curso, request.id_profesor)
+    print(resultado)
+    return resultado
+
+@app.get("/soliciudes_teachers")
+def get_solicitudes_teachers():
+    resultado = db_utils.get_solicitudes()
+    if "error" in resultado:
+        raise HTTPException(status_code=500, detail=resultado["error"])
+    return resultado
+
+@app.post("/accept_teachers")
+def accept_teachers(request: AcceptRequest):
+    resultado = db_utils.accept_solicitud(request.id_curso, request.id_nodo)
+    if "error" in resultado:
+        raise HTTPException(status_code=500, detail=resultado["error"])
+    return resultado
+
+@app.post("/reject_teachers")
+def accept_teachers(request: AcceptRequest):
+    resultado = db_utils.reject_solicitud(request.id_curso, request.id_nodo)
+    if "error" in resultado:
+        raise HTTPException(status_code=500, detail=resultado["error"])
+    return resultado
+
+@app.get("/inscripciones_students")
+def inscripciones_students():
+    resultado = db_utils.get_inscripciones()
+    if "error" in resultado:
+        raise HTTPException(status_code=500, detail=resultado["error"])
+    return resultado
+
+@app.post("/accept_students")
+def accept_students(request: AcceptRequest):
+    resultado = db_utils.accept_inscripcion(request.id_curso, request.id_nodo)
+    if "error" in resultado:
+        raise HTTPException(status_code=500, detail=resultado["error"])
+    return resultado
+
+#/reject_students
+@app.post("/reject_students")
+def reject_students(request: AcceptRequest):
+    resultado = db_utils.reject_inscripcion(request.id_curso, request.id_nodo)
+    if "error" in resultado:
+        raise HTTPException(status_code=500, detail=resultado["error"])
+    return resultado
+
+@app.post("/insert_inscripcion")
+def insert_inscripcion(request: AcceptRequest):
+    resultado = db_utils.insert_inscripcion(request.id_curso, request.id_nodo)
+    if "error" in resultado:
+        raise HTTPException(status_code=500, detail=resultado["error"])
+    return resultado
+
+@app.post("/filter")
+def login(request: query):
+    # Simulación de verificación de usuario (aquí iría tu lógica real)
+    resultado = db_utils.filter(request.query)
+    print(resultado)
+    return resultado
+
+@app.post("/filterUser")
+def login(request: query):
+    # Simulación de verificación de usuario (aquí iría tu lógica real)
+    resultado = db_utils.filter_user(request.query)
+    print(resultado)
     return resultado

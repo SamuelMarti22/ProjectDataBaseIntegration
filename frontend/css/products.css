@@ -174,3 +174,51 @@ body {
 .cancelled-line {
   color: #e91e63;
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+.estado-aprobado {
+  color: green;
+  font-weight: bold;
+}
+
+.estado-rechazado {
+  color: red;
+  font-weight: bold;
+}
+
+.estado-pendiente {
+  color: orange;
+  font-weight: bold;
+}
+
+button {
+  margin-top: 5px;
+  padding: 8px 16px;
+  background-color: #4f46e5; /* azul-violeta */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #4338ca; /* azul más oscuro */
+  transform: scale(1.05);
+}
+
+button:active {
+  transform: scale(0.97);
+}

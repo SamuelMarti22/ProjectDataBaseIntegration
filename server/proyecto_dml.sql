@@ -10,6 +10,13 @@ INSERT INTO Estudiante VALUES (1001, 'stud123', 3);
 INSERT INTO Estudiante VALUES (1002, 'stud456', 4);
 INSERT INTO Curso VALUES ('MAT101', 'Álgebra Lineal', 'Matemáticas', 'ruta/algebra.pdf', '2024-01-10', '2024-06-10', 2024, 1, 500.0, 2);
 INSERT INTO Curso VALUES ('FIS201', 'Mecánica Clásica', 'Física', 'ruta/mecanica.pdf', '2024-02-01', '2024-07-01', 2024, 1, 600.0, 5);
+INSERT INTO Curso VALUES
+('CS101', 'Introducción a la Programación', 'Computación', 'ruta/programacion.pdf', '2025-06-10', '2025-11-10', 2025, 2, 450.0, NULL),
+('HIS202', 'Historia del Arte Moderno', 'Humanidades', 'ruta/historia_arte.pdf', '2025-07-01', '2025-12-01', 2025, 2, 400.0, NULL),
+('BIO150', 'Biología Marina', 'Biología', 'ruta/biologia_marina.pdf', '2025-06-15', '2025-12-15', 2025, 2, 550.0, NULL),
+('PSI301', 'Psicología del Aprendizaje', 'Psicología', 'ruta/psicologia_aprendizaje.pdf', '2025-07-20', '2025-12-20', 2025, 2, 600.0, NULL),
+('ECO220', 'Microeconomía Intermedia', 'Economía', 'ruta/microeconomia.pdf', '2025-08-05', '2026-01-05', 2025, 2, 480.0, NULL);
+
 INSERT INTO Pago VALUES (1, 500.0, 111111);
 INSERT INTO Pago VALUES (2, 600.0, 222222);
 INSERT INTO Pago VALUES (3, 500.0, 333333);

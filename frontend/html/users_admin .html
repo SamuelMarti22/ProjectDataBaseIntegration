@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cursos</title>
+  <link rel="stylesheet" href="../css/courses.css">
+</head>
+<body>
+  <div class="topbar">WrapPixel - Panel Cursos</div>
+  <div class="main-layout">
+    <aside class="sidebar">
+      <h2>MaterialM</h2>
+      <nav>
+        <ul>
+          <li><a href="courses_admin.html">Cursos</a></li>
+          <li><a href="#" class="active" >Usuarios</a></li>
+          <li><a href="products_administrator_students.html">Solicitud Estudiante</a></li>
+          <li><a href="products_administrator_teachers.html">Solicitud Docentes</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="content">
+  <form id="filterForm">
+  <div class="filters">
+
+    <div class="select-container">
+      <label for="rol">Rol</label>
+      <select id="rol" name="rol">
+        <option value="null">No filtrar</option>
+        <option value="Cliente">Cliente</option>
+        <option value="Profesor">Profesor</option>
+        <option value="Estudiante">Estudiante</option>
+      </select>
+    </div>
+
+    <div class="select-container">
+      <label for="genero">Genero</label>
+      <select id="genero" name="genero">
+        <option value="null">No filtrar</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
+        <option value="Otro">Otro</option>
+      </select>
+    </div>
+
+    <button id="btn-filter-user">Filtrar</button>
+
+  </div>
+</form>
+
+      <div class="courses" id="course-container">
+        <!-- Courses injected by JS -->
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/courses.js"></script>
+  <script src="../scripts/main.js"></script>
+</body>
+</html>
