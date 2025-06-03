@@ -1342,11 +1342,46 @@ async function entregarTareaAlert(id_tarea) {
     }
 }
 
-function entregarTarea(id_tarea, ruta) {
+async function entregarTarea(id_tarea, ruta) {
     // Aquí va tu lógica, por ejemplo una llamada a la API
     console.log(`Entregando tarea ${id_tarea} con ruta: ${ruta}`);
     Swal.fire('¡Entregada!', 'Tu tarea fue registrada.', 'success');
+
+        console.log("Intentando Entregar Tarea...");
+        matricula_estudiante = 1001
+        fecha_entrega = new Date().toISOString().slice(0, 10);
+        const archivo = ruta
+
+        console.log(archivo);
+        if (!archivo) {
+            alert("Por favor, completa los campos.");
+            return;
+        }
+
+        const datos = {
+            id_tarea: id_tarea,
+            matricula_estudiante: matricula_estudiante,
+            fecha_entrega: fecha_entrega,
+            archivo: archivo
+        };
+
+        try {
+            const response = await fetch("http://127.0.0.1:8000/entregarTarea", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(datos)
+            });
+
+            const data = await response.json();
+            console.log("Respuesta del servidor:", data);
+        } catch (error) {
+            console.error("Error al logearse:", error);
+            alert("Error de red o de conexión con el servidor.");
+        }
 }
+
 
 async function verEntregaTareas(id_tarea) {
     try {
@@ -1381,7 +1416,7 @@ async function verEntregaTareas(id_tarea) {
             <td>${entrega.ruta_titulo}</td>
             <td>${entrega.puntaje ?? "Sin calificar"}</td>
             <td>
-                <button onclick="console.log('${entrega.id_tarea}')">Calificar</button>
+                <button onclick="calificar('${entrega.id_entrega}')">Calificar</button>
             </td>
     `;
 
@@ -1393,6 +1428,52 @@ async function verEntregaTareas(id_tarea) {
         Swal.fire("Error de red o de conexión con el servidor.", "", "error");
     }
 
+}
+
+async function calificar(id_entrega) {
+    const { value: puntaje } = await Swal.fire({
+        title: 'Calificar Entrega',
+        input: 'number',
+        inputLabel: 'Puntaje (0-10)',
+        inputAttributes: {
+            min: 0,
+            max: 10,
+            step: 1
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Calificar',
+        cancelButtonText: 'Cancelar',
+        inputValidator: (value) => {
+            if (value === '' || value < 0 || value > 10) {
+                return '¡Por favor ingresa un puntaje válido!';
+            }
+        }
+    });
+
+    if (puntaje !== undefined) {
+        console.log(`Calificando entrega ${id_entrega} con puntaje: ${puntaje}`);
+        datos = {
+            id_entrega: id_entrega,
+            puntaje: puntaje
+        };
+        console.log("Datos a enviar:", datos);
+        try {
+            const respuesta = await fetch("http://127.0.0.1:8000/calificar", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(datos)
+            });
+            const data = await respuesta.json();
+            console.log("Respuesta del servidor:", data);
+        }
+        catch (error) {
+            console.error("Error al calificar una entrega", error);
+            Swal.fire("Error de red o de conexión con el servidor.", "", "error");
+        }
+        Swal.fire('¡Calificado!', `La entrega fue calificada con ${puntaje} puntos.`, 'success');
+    }
 }
 
 const cargarInformacionCurso = document.getElementById("infoCursos");
@@ -1734,52 +1815,6 @@ function cambiarPaginaForosProfesor(id_foro) {
     window.location.href = "http://127.0.0.1:5500/frontend/html/courses/chat_foro.html"
 }
 
-const btnentregarTarea = document.getElementById("btn-entregarTarea");
-if (btnentregarTarea) {
-    document.getElementById("btn-entregarTarea").addEventListener("click", async (e) => {
-        e.preventDefault();
-        console.log("Intentando Entregar Tarea...");
-        id_tarea = 7
-        //const id_curso = localStorage.getItem("matricula_estudiante");
-        matricula_estudiante = 1001
-        fecha_entrega = new Date().toISOString().slice(0, 10);
-        const archivo = document.getElementById("ruta").value;
-
-        console.log(archivo);
-        if (!archivo) {
-            alert("Por favor, completa los campos.");
-            return;
-        }
-        const datos = {
-            id_tarea: id_tarea,
-            matricula_estudiante: matricula_estudiante,
-            fecha_entrega: fecha_entrega,
-            archivo: archivo
-        };
-
-        try {
-            const response = await fetch("http://127.0.0.1:8000/entregarTarea", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(datos)
-            });
-
-            const data = await response.json();
-            console.log("Respuesta del servidor:", data);
-
-            if (data.estado) {
-                console.log("Insercion exitosa:", data.usuario);
-            } else {
-                alert("Error: " + data);
-            }
-        } catch (error) {
-            console.error("Error al logearse:", error);
-            alert("Error de red o de conexión con el servidor.");
-        }
-    });
-}
 
 
 const cargarMensajes = document.getElementById("mensajes-foro");

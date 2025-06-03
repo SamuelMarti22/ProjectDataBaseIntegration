@@ -346,3 +346,14 @@ def mensajes(request: EnviarMensaje):
     resultado = db_utils.enviar_mensajes(request.id_nodo, request.id_foro, request.titulo, request.descripcion, request.id_mensaje_replica)
     print(resultado)
     return resultado
+
+class CalificarRequest(BaseModel):
+    id_entrega: int
+    puntaje: float
+
+#/calificar
+@app.post("/calificar")
+def calificar(request: CalificarRequest):
+    resultado = db_utils.calificar(request.id_entrega, request.puntaje)
+    print(resultado)
+    return resultado

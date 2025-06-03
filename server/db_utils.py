@@ -1101,9 +1101,17 @@ def entregar_tarea(id_tarea, matricula_estudiante,fecha_entrega,archivo):
         print("Conectando a la base de datos para entregar tarea...")
         conn = get_connection()
         cursor = conn.cursor()
-        cursor.callproc("entregar_tarea", [id_tarea,matricula_estudiante,fecha_entrega,archivo])
+
+        cursor.execute("INSERT INTO Archivo (ruta_titulo) VALUES (%s)", (archivo,))
+        id_archivo = cursor.lastrowid  
+
+        cursor.execute(
+            "INSERT INTO Entrega_tarea (id_archivo, id_tarea, puntaje, matricula_estudiante) VALUES (%s, %s, %s, %s)",
+            (id_archivo, id_tarea, 0, matricula_estudiante)
+        )
+
         conn.commit()
-        print("Material insertado correctamente.")
+        print("Tarea entregada correctamente.")
     except mysql.connector.Error as e:
         print("Error al insertar usuario:", e)
         return {"error": str(e)}
@@ -1189,6 +1197,31 @@ def enviar_mensajes(id_nodo,id_foro,titulo,descripcion, id_mensaje_replica):
         return {"estado":resultado} if resultado else {"data": None}
     except mysql.connector.Error as e:
         print("Error al insertar inscripcion:", e)
+        return {"error": str(e)}
+    finally:
+        if cursor:
+            cursor.close()
+        if conn and conn.is_connected():
+            conn.close()
+        print("Conexion cerrada")
+
+#/calificar
+def calificar(id_entrega, puntaje):
+    conn = None
+    cursor = None
+    try:
+        print("Conectando a la base de datos para calificar tarea...")
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "UPDATE Entrega_tarea SET puntaje = %s WHERE id_entrega = %s",
+            (puntaje, id_entrega),
+        )
+        conn.commit()
+        print("Tarea calificada correctamente.")
+        return {"estado": "Tarea calificada correctamente"}
+    except mysql.connector.Error as e:
+        print("Error al calificar tarea:", e)
         return {"error": str(e)}
     finally:
         if cursor:
