@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-
+from typing import Optional
 from server import db_utils
 
 app = FastAPI()
@@ -9,7 +9,7 @@ app = FastAPI()
 # Habilitar CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # En producción, reemplaza * por la URL específica del frontend
+    allow_origins=["*"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
@@ -25,6 +25,13 @@ def leer_usuarios():
 @app.get("/cursos")
 def leer_cursos():
     resultado = db_utils.get_Cursos()
+    if "error" in resultado:
+        raise HTTPException(status_code=500, detail=resultado["error"])
+    return resultado
+
+@app.get("/cursosCompleto")
+def leer_cursos():
+    resultado = db_utils.get_Cursos_Completo()
     if "error" in resultado:
         raise HTTPException(status_code=500, detail=resultado["error"])
     return resultado
@@ -95,6 +102,46 @@ class AcceptRequest(BaseModel):
 
 class query(BaseModel):
     query: str
+
+class curso(BaseModel):
+    curso: str
+
+class tarea(BaseModel):
+    id_tarea: int
+
+class foro(BaseModel):
+    id_foro: int
+
+class buscarUsuarioRequest(BaseModel):
+    id_nodo: int
+
+class eliminarCursoRequest(BaseModel):
+    id_curso: str
+
+class InsertMaterial(BaseModel):
+    titulo: str
+    descripcion: str
+    archivo: str
+    id_curso: str
+
+class InsertTarea(BaseModel):
+    titulo: str
+    descripcion: str
+    fecha_maxima: str
+    id_curso: str
+
+class EntregarTarea(BaseModel):
+    id_tarea: int
+    matricula_estudiante: int
+    fecha_entrega: str
+    archivo: str
+
+class EnviarMensaje(BaseModel):
+    id_nodo: int
+    id_foro: int
+    titulo: str
+    descripcion: str
+    id_mensaje_replica: Optional[int] = None
 
 @app.post("/login")
 def login(request: LoginRequest):
@@ -189,7 +236,113 @@ def login(request: query):
 
 @app.post("/filterUser")
 def login(request: query):
-    # Simulación de verificación de usuario (aquí iría tu lógica real)
     resultado = db_utils.filter_user(request.query)
+    print(resultado)
+    return resultado
+
+@app.post("/listEstudianteProfesor")
+def login(request: curso):
+    resultado = db_utils.listEstudianteProfesor(request.curso)
+    print(resultado)
+    return resultado
+
+@app.post("/listaMateriales")
+def login(request: curso):
+    resultado = db_utils.listaMateriales(request.curso)
+    print(resultado)
+    return resultado
+
+@app.post("/listaTareas")
+def login(request: curso):
+    resultado = db_utils.listaTareas(request.curso)
+    print(resultado)
+    return resultado
+
+@app.delete("/eliminarUsuario")
+def eliminar_usuario(request: buscarUsuarioRequest):
+    print("Eliminando usuario con ID:", request.id_nodo)
+    resultado = db_utils.eliminar_usuario(request.id_nodo)
+    if "error" in resultado:
+        raise HTTPException(status_code=500, detail=resultado["error"])
+    return {"message": "Usuario eliminado correctamente"}
+
+@app.delete("/eliminarCurso")
+def eliminar_curso(request: eliminarCursoRequest):
+    print("Eliminando curso con ID:", request.id_curso)
+    resultado = db_utils.eliminar_curso(request.id_curso)
+    if "error" in resultado:
+        raise HTTPException(status_code=500, detail=resultado["error"])
+    return {"message": "Curso eliminado correctamente"}
+
+@app.post("/verEntregaTareas")
+def login(request: tarea):
+    resultado = db_utils.verEntregaTareas(request.id_tarea)
+    print(resultado)
+    return resultado
+
+@app.get("/infoCursos")
+def login():
+    resultado = db_utils.infoCursos()
+    print(resultado)
+    return resultado
+
+@app.post("/insertMaterial")
+def insertar_material(request: InsertMaterial):
+    resultado = db_utils.insertar_material(request.titulo, request.descripcion, request.archivo, request.id_curso)
+    print(resultado)
+    return resultado
+
+@app.post("/insertTarea")
+def insertar_tarea(request: InsertTarea):
+    resultado = db_utils.insertar_tarea(request.titulo, request.descripcion,request.fecha_maxima, request.id_curso)
+    print(resultado)
+    return resultado
+
+@app.post("/crearForo")
+def crear_Foro(request: InsertTarea):
+    resultado = db_utils.crear_Foro(request.titulo, request.descripcion,request.fecha_maxima, request.id_curso)
+    print(resultado)
+    return resultado
+
+@app.post("/cargarCursosProfesor")
+def login(request: buscarUsuarioRequest):
+    resultado = db_utils.cargarCursosProfesor(request.id_nodo)
+    print(resultado)
+    return resultado
+
+@app.post("/listaForos")
+def listaForos(request: curso):
+    resultado = db_utils.listaForos(request.curso)
+    print(resultado)
+    return resultado
+
+@app.post("/entregarTarea")
+def entregar_tarea(request: EntregarTarea):
+    resultado = db_utils.entregar_tarea(request.id_tarea, request.matricula_estudiante,request.fecha_entrega, request.archivo)
+    print(resultado)
+    return resultado
+
+@app.post("/cargarCursosEstudiante")
+def cargar_cursos_estudiante(request: buscarUsuarioRequest):
+    resultado = db_utils.cargarCursosEstudiante(request.id_nodo)
+    print(resultado)
+    return resultado
+
+@app.post("/listaMaterialesEstudiantes")
+def lista_materiales_estudiantes(request: curso):
+    resultado = db_utils.listaMaterialesEstudiantes(request.curso)
+    print(resultado)
+    return resultado
+
+
+@app.post("/mensajes")
+def mensajes(request: foro):
+    resultado = db_utils.mensajes(request.id_foro)
+    print(resultado)
+    return resultado
+
+@app.post("/enviar_mensaje")
+def mensajes(request: EnviarMensaje):
+    resultado = db_utils.enviar_mensajes(request.id_nodo, request.id_foro, request.titulo, request.descripcion, request.id_mensaje_replica)
     print(resultado)
     return resultado

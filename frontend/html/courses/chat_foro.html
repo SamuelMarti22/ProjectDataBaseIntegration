@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Foro - Chat</title>
+    <link rel="stylesheet" href="../../css/chat_foro.css">
+</head>
+
+<body id="mensajes-foro">
+    <div class="foro-container">
+        <h2>Foro de Mensajes</h2>
+        <div id="mensajes" class="mensajes-container"></div>
+        <form id="foroForm">
+            <input type="text" id="titulo" placeholder="Título del mensaje" required>
+            <textarea id="descripcion" placeholder="Escribe tu mensaje..." required></textarea>
+            <button id="enviar_mensaje">Enviar</button>
+        </form>
+        <button onclick="volverPaginaAnterior()" style="margin-top: 20px;">Volver</button>
+    </div>
+    <script src="../../js/chat_foro.js"></script>
+    <script src="../../scripts/main.js"></script>
+</body>
+
+</html>

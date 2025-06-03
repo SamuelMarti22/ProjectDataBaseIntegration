@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popular Products</title>
+  <link rel="stylesheet" href="../../css/products.css">
+</head>
+
+<body id="listaTareasProfes">
+  <div class="topbar">WrapPixel - Productos Populares</div>
+  <div class="main-layout">
+    <aside class="sidebar">
+      <h2>MaterialM</h2>
+      <nav>
+        <ul>
+          <li><a href="materials.html">Materiales</a></li>
+          <li><a href="list_estudents.html">Listar Alumnos</a></li>
+          <li><a href="#" class="active">Listar Tareas</a></li>
+          <li><a href="foros.html">Foros</a></li>
+          <li><a href="../courses_teacher.html" id="salir">Salir</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="content" style="display: flex; flex-direction: column; align-items: center;">
+      <div class="products-container" style="width: 95%; margin: 20px;">
+        <h3>Tarea</h3>
+        <table id="tabla-solicitudes">
+          <thead>
+            <tr>
+              <th>Curso</th>
+              <th>Profesor</th>
+              <th>Estudiantes</th>
+              <th>Entregas</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-body"></tbody>
+        </table>
+      </div>
+      <button id="btn-insertTarea">Insertar Tarea</button>
+      <div class="products-container" style="width: 95%; margin: 20px;">
+        <h3 id="Titulo_tarea">No hay tarea para mostrar</h3>
+        <table id="tabla-solicitudes">
+          <thead>
+            <tr>
+              <th>Estudiante</th>
+              <th>Archivo</th>
+              <th>Puntaje</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-body-tareas"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../../scripts/main.js"></script>
+</body>
+
+</html>

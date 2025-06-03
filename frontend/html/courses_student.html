@@ -6,7 +6,7 @@
   <title>Cursos</title>
   <link rel="stylesheet" href="../css/courses.css">
 </head>
-<body>
+<body id="cargarCursosEstudiante">
   <div class="topbar">WrapPixel - Panel Cursos</div>
   <div class="main-layout">
     <aside class="sidebar">
@@ -20,12 +20,13 @@
     </aside>
 
     <main class="content">
+      <!-- boton = `<button onclick="mostrarAlertaStudent('${solicitud.id_curso}')">Ver</button>`; -->
       <div class="courses" id="course-container">
         <!-- Courses injected by JS -->
       </div>
     </main>
   </div>
 
-  <script src="../js/courses.js"></script>
+  <script src="../scripts/main.js"></script>
 </body>
 </html>

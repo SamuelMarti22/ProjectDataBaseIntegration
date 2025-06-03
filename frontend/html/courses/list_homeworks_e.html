@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Popular Products</title>
+  <link rel="stylesheet" href="../../css/products.css">
+</head>
+
+<body id="listaTareas">
+  <div class="topbar">WrapPixel - Productos Populares</div>
+  <div class="main-layout">
+    <aside class="sidebar">
+      <h2>MaterialM</h2>
+      <nav>
+        <ul>
+          <li><a href="materials_e.html" >Materiales</a></li>
+          <li><a href="#" class="active">Listar Tareas</a></li>
+          <li><a href="foros.html" >Foros</a></li>
+          <li><a href="../courses_student.html" id="salir">Salir</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="products-container">
+        <h3>Solicitudes</h3>
+        <table id="tabla-solicitudes">
+          <thead>
+            <tr>
+              <th>Tarea</th>
+              <th>Descripción</th>
+              <th>Fecha limite</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-body"></tbody>
+        </table>
+      </div>
+    </main>
+
+    <div class="form-container">
+
+    <div id="formularioDiv" class="hidden form-box">
+      <h2>Entregar Tarea</h2>
+      <form id="formulario">
+
+        <label for="extra">Archivo:</label>
+        <input type="text" id="ruta" name="ruta" required>
+      </form>
+    </div>
+
+  </div>
+    <div class="courses" id="course-container">
+      <!-- Courses injected by JS -->
+    </div>
+    
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="../../scripts/main.js"></script>
+</body>
+
+</html>

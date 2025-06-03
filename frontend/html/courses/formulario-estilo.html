@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario Desplegable</title>
+  <link rel="stylesheet" href="formulario-estilo.css">
+</head>
+<body>
+
+  <div class="form-container">
+    <button id="toggleFormBtn">Mostrar / Ocultar Formulario</button>
+
+    <div id="formularioDiv" class="hidden form-box">
+      <h2>Registrar Curso</h2>
+      <form id="formulario">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" required>
+
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" name="descripcion" required>
+
+        <label for="extra">Dato adicional:</label>
+        <input type="text" id="extra" name="extra">
+
+        <button type="submit">Registrar Curso</button>
+      </form>
+    </div>
+
+    <a href="#" class="volver-btn">Volver</a>
+  </div>
+
+  <script src="formulario-estilo.js"></script>
+</body>
+</html>

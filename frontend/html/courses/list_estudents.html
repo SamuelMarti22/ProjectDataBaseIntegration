@@ -5,20 +5,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Popular Products</title>
-  <link rel="stylesheet" href="../css/products.css">
+  <link rel="stylesheet" href="../../css/products.css">
 </head>
 
-<body id="products_administrator_teachers">
+<body id="listaEstudiantesProfesor">
   <div class="topbar">WrapPixel - Productos Populares</div>
   <div class="main-layout">
     <aside class="sidebar">
       <h2>MaterialM</h2>
       <nav>
         <ul>
-          <li><a href="courses_admin.html">Cursos</a></li>
-          <li><a href="users_admin .html">Usuarios</a></li>
-          <li><a href="products_administrator_students.html">Solicitud Estudiante</a></li>
-          <li><a href="#" class="active">Solicitud Docentes</a></li>
+          <li><a href="materials.html" >Materiales</a></li>
+          <li><a href="#" class="active">Listar Alumnos</a></li>
+          <li><a href="list_homeworks.html">Listar Tareas</a></li>
+          <li><a href="foros.html">Foros</a></li>
+          <li><a href="../courses_teacher.html" id="salir">Salir</a></li>
         </ul>
       </nav>
     </aside>
@@ -29,18 +30,21 @@
         <table id="tabla-solicitudes">
           <thead>
             <tr>
-              <th>Curso</th>
-              <th>Profesor</th>
-              <th>Estudiantes</th>
+              <th>Nombre</th>
+              <th>Email</th>
             </tr>
           </thead>
           <tbody id="tabla-body"></tbody>
         </table>
       </div>
     </main>
+
+      <div class="courses" id="course-container">
+        <!-- Courses injected by JS -->
+      </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="../scripts/main.js"></script>
+  <script src="../../scripts/main.js"></script>
 </body>
 
 </html>

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cursos</title>
   <link rel="stylesheet" href="../css/courses.css">
 </head>
+
 <body>
   <div class="topbar">WrapPixel - Panel Cursos</div>
   <div class="main-layout">
@@ -14,61 +16,75 @@
       <nav>
         <ul>
           <li><a href="#" class="active">Cursos</a></li>
-          <li><a href="users_admin .html" >Usuarios</a></li>
+          <li><a href="users_admin .html">Usuarios</a></li>
           <li><a href="products_administrator_students.html">Solicitud Estudiante</a></li>
           <li><a href="products_administrator_teachers.html">Solicitud Docentes</a></li>
+          <li><a href="info_courses_admin.html">Información cursos</a></li>
+          <li><a href="formulario.html"><button>Crear curso</button></a></li>
         </ul>
       </nav>
     </aside>
 
     <main class="content">
-  <form id="filterForm">
-  <div class="filters">
+      <form id="filterForm">
+        <div class="filters">
 
-    <div class="select-container">
-      <label for="categoria">Categoría</label>
-      <select id="categoria" name="categoria">
-        <option value="null">No filtrar</option>
-        <option value="Matemáticas">Matemáticas</option>
-        <option value="Física">Física</option>
-      </select>
-    </div>
+          <div class="select-container">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" name="categoria">
+              <option value="null">No filtrar</option>
+              <option value="Matemáticas">Matemáticas</option>
+              <option value="Física">Física</option>
+            </select>
+          </div>
 
-    <div class="select-container">
-      <label for="precio">Precio</label>
-      <select id="precio" name="precio">
-        <option value="null">No filtrar</option>
-        <option value="200-300">$200 - $300</option>
-        <option value="300-400">$300 - $400</option>
-        <option value="400-500">$400 - $500</option>
-        <option value="500-600">$500 - $600</option>
-      </select>
-    </div>
+          <div class="select-container">
+            <label for="precio">Precio</label>
+            <select id="precio" name="precio">
+              <option value="null">No filtrar</option>
+              <option value="200-300">$200 - $300</option>
+              <option value="300-400">$300 - $400</option>
+              <option value="400-500">$400 - $500</option>
+              <option value="500-600">$500 - $600</option>
+            </select>
+          </div>
 
-    <div class="select-container">
-      <label for="ano">Año</label>
-      <select id="ano" name="ano">
-        <option value="null">No filtrar</option>
-        <option value="2025">2025</option>
-        <option value="2024">2024</option>
-        <option value="2023">2023</option>
-        <option value="2022">2022</option>
-        <option value="2021">2021</option>
-      </select>
-    </div>
+          <div class="select-container">
+            <label for="ano">Año</label>
+            <select id="ano" name="ano">
+              <option value="null">No filtrar</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option>
+            </select>
+          </div>
 
-    <button id="btn-filter">Filtrar</button>
+          <button id="btn-filter">Filtrar</button>
 
-  </div>
-</form>
+        </div>
+      </form>
 
-      <div class="courses" id="course-container">
-        <!-- Courses injected by JS -->
-      </div>
+      <table id="tablaCursos">
+        <thead>
+          <tr>
+            <th>ID Curso</th>
+            <th>Nombre</th>
+            <th>Categoria</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
+            <th>Precio</th>
+            <th>Id Profesor</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyCursos"></tbody>
+      </table>
     </main>
   </div>
-
-  <script src="../js/courses.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../scripts/main.js"></script>
 </body>
+
 </html>
