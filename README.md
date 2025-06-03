@@ -212,18 +212,17 @@ Con esta estructura, cualquier usuario podrá interactuar con la plataforma de a
 
 Esto levantará el backend utilizando Uvicorn, apuntando al archivo principal main.py dentro del módulo server.
 
-2. Crear la base de datos
+2. *Crear la base de datos*
 
 Ejecuta el archivo crear_db.py, el cual se encarga de generar la estructura inicial de la base de datos en la instancia configurada
 
-python crear_db.py
 
-3. Cargar los procedimientos almacenados
+3. *Cargar los procedimientos almacenados*
 Una vez creada la base de datos, corre el archivo procedure.py. Este archivo contiene los procedimientos almacenados que serán utilizados por la aplicación:
 
 python procedure.py
 
-4. Visualizar el frontend
+4. *Visualizar el frontend*
 Para ejecutar la interfaz gráfica (index_prueba.html), puedes abrir el archivo en el navegador mediante alguna de estas opciones:
 
 - Usando una extensión como Live Server en VS Code.
@@ -232,7 +231,7 @@ Para ejecutar la interfaz gráfica (index_prueba.html), puedes abrir el archivo 
 ## 7. Detalles del Desarrollo - Workflow
 Una vez desplegado y ejecutado el sistema, los usuarios deben autenticarse a través de las opciones de Login o Sign Up, según corresponda. Tras ingresar a la plataforma, cada usuario podrá acceder a funcionalidades específicas basadas en su rol (administrador, profesor o estudiante).
 
-1. Interacción desde el frontend (JavaScript)
+1. *Interacción desde el frontend (JavaScript)*
 Cuando el usuario activa alguna acción desde la interfaz —como hacer clic en un botón—, se ejecuta un bloque de código JavaScript que realiza una petición HTTP a la API. Esta acción generalmente se define de la siguiente forma:
 
 ´´
@@ -256,15 +255,14 @@ if (btn) {
 
 Este fragmento puede enviar datos al servidor por POST (por ejemplo, desde formularios) o realizar una consulta con GET, según sea el caso. Los datos se capturan desde inputs HTML y se convierten en un objeto JSON para ser enviados en el cuerpo de la solicitud.
 
-2. Comunicación con la API (FastAPI)
+2. *Comunicación con la API (FastAPI)*
 En el backend, FastAPI expone un endpoint que escucha la solicitud. Si se trata de una petición POST, se define una ruta como esta:
 
-´´ @app.post("/action")
+´ @app.post("/action")
     def function(request: BaseModel):
     resultado = db_utils.function_db(request.propiedad, ...)
     print(resultado)
-    return resultado
-´´
+    return resultado´
 
 Aquí, FastAPI:
 
@@ -273,11 +271,11 @@ Aquí, FastAPI:
 - Llama a una función que procesa esos datos y consulta la base de datos.
 Retorna una respuesta en formato JSON, ya sea con los datos solicitados o con un mensaje de error.
 
-3. Acceso a la base de datos (db_utils)
+3. *Acceso a la base de datos (db_utils)*
 La función llamada desde la API (function_db) se encarga de interactuar directamente con la base de datos. Su estructura general es la siguiente:
 
 
-´´ def function_db(parametro):
+´def function_db(parametro):
     conn = None
     cursor = None
     try:
@@ -295,14 +293,14 @@ La función llamada desde la API (function_db) se encarga de interactuar directa
             cursor.close()
         if conn and conn.is_connected():
             conn.close()
-        print("Conexión cerrada") ´´
+        print("Conexión cerrada")´
 
 
 - Se ejecuta una consulta con parámetros seguros (previniendo inyecciones SQL).
 
 - El resultado se convierte en un diccionario JSON ({"data": ...}), que puede ser fácilmente leído por el frontend.
 
-4. Retorno y manejo del resultado en el frontend
+4. *Retorno y manejo del resultado en el frontend*
 El JSON devuelto por la API es procesado por el código JavaScript. Con base en su contenido (data o error), se realizan acciones como:
 
 - Mostrar información al usuario.
@@ -318,13 +316,13 @@ Cuando se ejecuta el archivo main.py, se carga automáticamente el contenido del
 
 El archivo db.utils contiene una función llamada get_connection, que se encarga de crear una conexión con la base de datos utilizando las credenciales definidas en las variables de entorno. La estructura de dicha función es la siguiente:
 
-  ´´ def get_connection():
+  ´def get_connection():
         return mysql.connector.connect(
         host=os.getenv("DB_HOST"),
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASSWORD"),
         database=os.getenv("DB_NAME"),
-        )´´
+        )´
 
 ## 9. como se lanza el servidor.
 
@@ -336,7 +334,79 @@ Utilizando Uvicorn con recarga automática (--reload), lo que facilita el trabaj
 
 Además, este proyecto puede ser desplegado en un entorno remoto, incluyendo plataformas como GitHub con integración a servicios de despliegue continuo (CI/CD) o directamente en servicios como AWS,
 
-# 10. Guía de Uso para el Usuario Final
+## 10. Guía de Uso para el Usuario Final
+
+Después de instalar todas las dependencias necesarias y configurar los parámetros del entorno (incluyendo las credenciales de la instancia AWS RDS), se puede iniciar la API desde la carpeta raíz del proyecto con el siguiente comando:
+
+uvicorn server.main:app --reload
+
+Una vez el servidor esté corriendo, se debe abrir el archivo index-prueba.html. En nuestro caso se utilizó la extensión Live Server de Visual Studio Code, pero también puede abrirse con cualquier otra herramienta de despliegue local.
+
+Esto cargará la página de inicio de sesión, desde donde el usuario podrá registrarse o autenticarse. Según el rol del usuario, será dirigido automáticamente a una de las siguientes interfaces:
+
+## Interfaces según el rol
+### Cliente
+
+- Puede explorar toda la oferta de cursos disponible.
+
+- Puede solicitar inscripción a un curso.
+
+- Una vez su solicitud es aceptada, el cliente se convierte en estudiante, y en futuros inicios de sesión será redirigido a esa interfaz.
+
+### Estudiante
+
+- Puede ver e inscribirse a nuevos cursos.
+
+- Accede a sus cursos inscritos.
+
+- Dentro de cada curso puede:
+
+- Visualizar materiales.
+
+- Ver y entregar tareas.
+
+- Participar en foros.
+
+- Enviar y responder mensajes dentro del foro correspondiente.
+
+### Profesor
+
+- Puede aplicar a cursos disponibles (pendiente de aprobación por un administrador).
+
+- Puede ver los cursos que ya está dictando.
+
+- Dentro de cada curso puede:
+
+- Crear y visualizar materiales.
+
+- Listar estudiantes.
+
+- Crear tareas y visualizar entregas.
+
+- Acceder a foros, crear foros y responder mensajes.
+
+(Nota: El botón de calificar tareas está disponible, pero actualmente no implementado completamente. Puede ser parte de una futura mejora.)
+
+### Administrador
+
+- Visualiza todos los cursos (activos e históricos).
+
+- Puede crear, eliminar y filtrar cursos por categoría, precio y año.
+
+- Gestiona usuarios: puede crearlos, eliminarlos y filtrarlos por rol y género.
+
+- Revisa, acepta o rechaza:
+
+- Solicitudes de inscripción por parte de clientes y estudiantes.
+
+- Solicitudes de dictado de cursos por parte de profesores.
+
+- Tiene acceso a la información completa de cada curso y sus participantes (estudiantes y profesores).
+
+Con esta estructura, cualquier usuario podrá interactuar con la plataforma de acuerdo a su rol, aprovechando sus funcionalidades académicas desde cualquier entorno compatible.
+
+---
+
 
 ## 11. Referencias
 
